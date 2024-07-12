@@ -1,39 +1,25 @@
 package main
 
 import (
+	"github.com/gorilla/mux"
+	"github.com/smhmurat/golang-forum-frontend/internal/handler"
 	"log"
-	"os"
+	"net/http"
 )
 
-type application struct {
-	appName string
-	server  server
-	debug   bool
-	errLog  *log.Logger
-	infoLog *log.Logger
-}
-
-type server struct {
-	host string
-	port string
-	url  string
-}
-
 func main() {
-	server := server{
-		host: "localhost",
-		port: "8080",
-		url:  "http://localhost:8080",
-	}
-	app := &application{
-		server:  server,
-		appName: "Golang Forum Web Application",
-		debug:   true,
-		errLog:  log.New(os.Stderr, "ERROR: ", log.Ltime|log.Ldate|log.Llongfile),
-		infoLog: log.New(os.Stdout, "INFO: ", log.Ltime|log.Ldate|log.Llongfile),
-	}
+	router := mux.NewRouter()
 
-	if err := app.listenAndServer(); err != nil {
-		log.Fatal(err)
+	fileServer := http.FileServer(http.Dir("./web/static/"))
+	router.PathPrefix("/web/static/").Handler(http.StripPrefix("/web/static/", fileServer))
+
+	router.HandleFunc("/", handler.HomePage)
+	router.HandleFunc("/login.html", handler.LoginPage)
+	router.HandleFunc("/register.html", handler.RegisterPage)
+
+	// Starting the server
+	log.Println("Starting server on :8081")
+	if err := http.ListenAndServe(":8081", router); err != nil {
+		log.Fatalf("Could not start server: %s\n", err.Error())
 	}
 }
