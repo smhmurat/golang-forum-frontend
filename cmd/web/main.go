@@ -14,8 +14,10 @@ func main() {
 	router.PathPrefix("/web/static/").Handler(http.StripPrefix("/web/static/", fileServer))
 
 	router.HandleFunc("/", handler.HomePage)
-	router.HandleFunc("/login.html", handler.LoginPage)
-	router.HandleFunc("/register.html", handler.RegisterPage)
+	router.HandleFunc("/register.html", handler.ShowRegisterFormHandler)
+	router.HandleFunc("/register", handler.RegisterHandler)
+	router.HandleFunc("/login.html", handler.ShowLoginFormHandler)
+	router.HandleFunc("/login", handler.LoginHandler)
 
 	// Starting the server
 	log.Println("Starting server on :8081")
