@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/smhmurat/golang-forum-frontend/models"
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 	"html/template"
 	"log"
 	"net/http"
@@ -17,17 +15,6 @@ import (
 
 type PageData struct {
 	Message string
-}
-
-var googleOauthConfig = &oauth2.Config{
-	RedirectURL:  "http://localhost:8082/auth/google/callback",
-	ClientID:     "68127164645-hfsjidmms4tcfh6iteoo8u0b5mhgsif5.apps.googleusercontent.com",
-	ClientSecret: "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",
-	Scopes: []string{
-		"https://www.googleapis.com/auth/userinfo.email",
-		"https://www.googleapis.com/auth/userinfo.profile",
-	},
-	Endpoint: google.Endpoint,
 }
 
 func init() {
