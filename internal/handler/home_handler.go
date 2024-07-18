@@ -2,22 +2,22 @@ package handler
 
 import (
 	"fmt"
+	"github.com/smhmurat/golang-forum-frontend/models"
 	"html/template"
 	"net/http"
 	"path/filepath"
 )
 
-type User struct {
-	LoggedIn bool
-}
-
-func GetUser(r *http.Request) User {
-	session, _ := r.Cookie("session")
-	user := User{LoggedIn: false}
-	if session != nil && session.Value == "true" {
-		user.LoggedIn = true
+func getUserSession(r *http.Request) models.UserSession {
+	session, err := r.Cookie("forum_session")
+	if err != nil {
+		return models.UserSession{LoggedIn: false}
 	}
-	return user
+	userSession := models.UserSession{LoggedIn: false}
+	if session != nil {
+		userSession.LoggedIn = true
+	}
+	return userSession
 }
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +34,7 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user := GetUser(r)
+	user := getUserSession(r)
 
 	err = tmpl.Execute(w, user)
 	if err != nil {

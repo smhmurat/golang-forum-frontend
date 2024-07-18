@@ -18,6 +18,7 @@ func main() {
 	router.HandleFunc("/register", handler.RegisterHandler)
 	router.HandleFunc("/login.html", handler.ShowLoginFormHandler)
 	router.HandleFunc("/login", handler.LoginHandler)
+	router.HandleFunc("/logout", handler.LogoutHandler)
 
 	// Starting the server
 	log.Println("Starting server on :8081")

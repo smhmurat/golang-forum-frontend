@@ -11,5 +11,14 @@
     <div class="content">
         {{ template "content" . }}
     </div>
+    <script>
+        document.getElementById('google').addEventListener('click', async function() {
+            window.location.href = 'http://localhost:8082/auth/google/signup';
+        });
+
+        document.getElementById('github').addEventListener('click', async function() {
+            window.location.href = 'http://localhost:8082/auth/github/login';
+        });
+    </script>
 </body>
 </html>

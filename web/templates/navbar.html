@@ -11,15 +11,13 @@
 
         {{template "search" .}}
         <div class="menu-login">
-{{/*            {{if and .Token}}*/}}
-{{/*                <span>Hoş geldin, {{.Username}}</span>*/}}
-{{/*                <a href="/logout">Çıkış Yap</a>*/}}
-{{/*            {{else}}*/}}
-{{/*                <a href="register.html">kayıt ol</a>*/}}
-{{/*                <a href="login.html">giriş yap</a>*/}}
-{{/*            {{end}}*/}}
-            <a href="register.html">kayıt ol</a>
-            <a href="login.html">giriş yap</a>
+            {{if .LoggedIn}}
+                <span>Hoş geldin, user</span>
+                <a href="/logout">Çıkış Yap</a>
+            {{else}}
+                <a href="register.html">kayıt ol</a>
+                <a href="login.html">giriş yap</a>
+            {{end}}
         </div>
     </nav>
 </header>
